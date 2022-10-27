@@ -22,9 +22,9 @@
 	defined(CONFIG_BOARD_NPCX7M6FB_EVB)
 #define SPI_FLASH_TEST_REGION_OFFSET 0x7F000
 #else
-#define SPI_FLASH_TEST_REGION_OFFSET 0xff000
+#define SPI_FLASH_TEST_REGION_OFFSET 0x0
 #endif
-#define SPI_FLASH_SECTOR_SIZE        4096
+#define SPI_FLASH_ERASE_SIZE        0x100000
 
 void main(void)
 {
@@ -55,8 +55,7 @@ void main(void)
 	/* Full flash erase if SPI_FLASH_TEST_REGION_OFFSET = 0 and
 	 * SPI_FLASH_SECTOR_SIZE = flash size
 	 */
-	rc = flash_erase(flash_dev, SPI_FLASH_TEST_REGION_OFFSET,
-			 SPI_FLASH_SECTOR_SIZE);
+	rc = flash_erase(flash_dev, SPI_FLASH_TEST_REGION_OFFSET, SPI_FLASH_ERASE_SIZE);
 	if (rc != 0) {
 		printf("Flash erase failed! %d\n", rc);
 	} else {
